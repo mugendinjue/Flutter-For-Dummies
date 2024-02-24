@@ -1,47 +1,47 @@
 import "package:flutter/material.dart";
 
-class CounterPage extends StatefulWidget {
-  const CounterPage({super.key});
+class UserInputPage extends StatefulWidget {
+  const UserInputPage({super.key});
 
   @override
-  State<CounterPage> createState() => _CounterPageState();
+  State<UserInputPage> createState() => _UserInputPageState();
 }
 
-class _CounterPageState extends State<CounterPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
+class _UserInputPageState extends State<UserInputPage> {
+  final TextEditingController _userNameController = TextEditingController();
+  String _greetingMessage = "";
+  void _greetUser() {
+    String name = _userNameController.text;
     setState(() {
-      _counter++;
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
+      _greetingMessage = "Hello $name !!";
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("You clicked the button this many times: "),
-            Text(
-              _counter.toString(),
-              style: const TextStyle(fontSize: 40),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(_greetingMessage),
             ),
-            ElevatedButton(
-                onPressed: _incrementCounter,
-                child: const Text(
-                  "Increment",
-                  style: TextStyle(color: Colors.green),
-                )),
-            ElevatedButton(
-                onPressed: _decrementCounter, child: const Text("Decrement", style: TextStyle(color: Colors.red)))
+            TextField(
+              controller: _userNameController,
+              decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Enter your name..."),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  onPressed: _greetUser,
+                  child: const Text(
+                    "Submit",
+                    style: TextStyle(color: Colors.green),
+                  )),
+            )
           ],
         ),
       ),
